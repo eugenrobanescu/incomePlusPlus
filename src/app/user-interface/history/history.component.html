@@ -1,0 +1,182 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-6 border-right">
+      <div class="example-config">
+        <label class="k-form-field">
+          <input
+            class="k-checkbox"
+            type="checkbox"
+            id="allowUnsort"
+            [(ngModel)]="allowUnsort"
+          />
+          <label class="k-checkbox-label" for="allowUnsort">
+            {{ allowUnsort ? "Disable" : "Enable" }} unsorting
+          </label> </label
+        ><br />
+        <label class="k-form-field">
+          <input
+            class="k-checkbox"
+            type="checkbox"
+            id="multiple"
+            [(ngModel)]="multiple"
+          />
+          <label class="k-checkbox-label" for="multiple">
+            {{ multiple ? "Disable" : "Enable" }} multiple columns sorting
+          </label>
+        </label>
+      </div>
+      <button
+        class="btn"
+        [ngClass]="{
+          'btn-success': !plusMode,
+          'btn-danger': plusMode
+        }"
+        (click)="onSwitchMode()"
+      >
+        Switch to {{ plusMode ? "expence" : "income" }}
+      </button>
+
+      <kendo-grid
+        [data]="gridView"
+        (edit)="editHandler($event)"
+        (cancel)="cancelHandler($event)"
+        (save)="saveHandler($event)"
+        (remove)="removeHandler($event)"
+        (add)="addHandler($event)"
+        [height]="530"
+        [sortable]="{
+          allowUnsort: allowUnsort,
+          mode: multiple ? 'multiple' : 'single'
+        }"
+        [sort]="sort"
+        (sortChange)="sortChange($event)"
+        *ngIf="plusMode"
+      >
+        <kendo-grid-column field="date" editor="date" title="Date">
+        </kendo-grid-column>
+
+        <kendo-grid-column field="name" editor="text" title="Product Name">
+        </kendo-grid-column>
+        <kendo-grid-column
+          field="value"
+          title="Unit Price"
+          width="230"
+          editor="numeric"
+        >
+        </kendo-grid-column>
+        <kendo-grid-column title="command">
+          <ng-template kendoGridCellTemplate let-isNew="isNew">
+            <!-- edit command directive, will be visible when not in edit mode -->
+            <button kendoGridEditCommand [primary]="true">Edit</button>
+            <!-- remove command directive, will be visible when not in edit mode -->
+            <button kendoGridRemoveCommand>Remove</button>
+            <!-- save command directive, will be visible when in edit mode -->
+            <button kendoGridSaveCommand>{{ isNew ? "Add" : "Update" }}</button>
+            <!-- cancel command directive, will be visible when in edit mode -->
+            <button kendoGridCancelCommand>
+              {{ isNew ? "Discard changes" : "Cancel" }}
+            </button>
+          </ng-template></kendo-grid-column
+        >
+      </kendo-grid>
+
+      <!-- Minus grid -->
+      <kendo-grid
+        [data]="gridView"
+        (edit)="editHandler($event)"
+        (cancel)="cancelHandler($event)"
+        (save)="saveHandler($event)"
+        (remove)="removeHandler($event)"
+        (add)="addHandler($event)"
+        [height]="530"
+        [sortable]="{
+          allowUnsort: allowUnsort,
+          mode: multiple ? 'multiple' : 'single'
+        }"
+        [sort]="sort"
+        (sortChange)="sortChange($event)"
+        *ngIf="!plusMode"
+      >
+        <kendo-grid-column field="date" title="Date" editor="date">
+        </kendo-grid-column>
+        <kendo-grid-column field="name" title="Product Name" editor="text">
+        </kendo-grid-column>
+        <kendo-grid-column
+          field="value"
+          title="Unit Price"
+          width="230"
+          editor="numeric"
+        >
+        </kendo-grid-column>
+        <kendo-grid-column title="command">
+          <ng-template kendoGridCellTemplate let-isNew="isNew">
+            <!-- edit command directive, will be visible when not in edit mode -->
+            <button kendoGridEditCommand [primary]="true">Edit</button>
+            <!-- remove command directive, will be visible when not in edit mode -->
+            <button kendoGridRemoveCommand>Remove</button>
+            <!-- save command directive, will be visible when in edit mode -->
+            <button kendoGridSaveCommand>{{ isNew ? "Add" : "Update" }}</button>
+            <!-- cancel command directive, will be visible when in edit mode -->
+            <button kendoGridCancelCommand>
+              {{ isNew ? "Discard changes" : "Cancel" }}
+            </button>
+          </ng-template></kendo-grid-column
+        >
+      </kendo-grid>
+    </div>
+    <div class="col-4 mt-1">
+      <h2>
+        {{
+          plusMode
+            ? "You are in Income Mode. Add new income!"
+            : "You are in Expense Mode. Add new costs"
+        }}
+      </h2>
+      <form #f="ngForm" (ngSubmit)="onSubmit(f)" class="mt-2">
+        <div class="form-group">
+          <label>Current Time:</label>
+
+          <input
+            type="time"
+            ngModel
+            class="form-control"
+            [ngModel]="currentDateForInput"
+            name="date"
+          />
+
+          <!-- <small id="emailHelp" class="form-text text-muted"
+            >We'll never share your email with anyone else.</small
+          > -->
+        </div>
+        <div class="form-group">
+          <label>{{ plusMode ? "Plus" : "Minus" }} name: </label>
+          <input
+            ngModel
+            type="text"
+            name="name"
+            class="form-control"
+            id="exampleInputPassword1"
+            placeholder="Ex: Auchan"
+          />
+        </div>
+        <div class="form-group">
+          <label>{{ plusMode ? "Plus" : "Minus" }} value</label>
+          <input
+            ngModel
+            type="number"
+            name="value"
+            class="form-control"
+            min="0"
+            placeholder="0"
+          />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+
+      <h3 class="mt-1">
+        Your money: {{ currentSum == null || undefined ? 0 : currentSum }}
+      </h3>
+    </div>
+  </div>
+</div>

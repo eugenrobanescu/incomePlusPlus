@@ -1,0 +1,78 @@
+<div class="container-fluid">
+  <div class="row border-top">
+    <div class="col-6 border-right">
+      <ngx-charts-bar-vertical
+        [view]=""
+        [scheme]="colorScheme"
+        [results]="sumsArray"
+        [gradient]="gradient"
+        [xAxis]="showXAxis"
+        [yAxis]="showYAxis"
+        [legend]="showLegend"
+        [showXAxisLabel]="showXAxisLabel"
+        [showYAxisLabel]="showYAxisLabel"
+        [xAxisLabel]="xAxisLabel"
+        [yAxisLabel]="yAxisLabel"
+        (select)="onSelect($event)"
+        *ngIf="sumsArray.length > 0"
+      >
+      </ngx-charts-bar-vertical>
+      <div class="col-5 mx-auto" *ngIf="sumsArray.length == 0">
+        <div class="mx-auto" style="width: 100px;">
+          <app-loading-spinner></app-loading-spinner>
+        </div>
+        <h4 class="ml-2">No history income</h4>
+        <h4 class="ml-2">Activate auto increment</h4>
+      </div>
+    </div>
+
+    <div class="col-4">
+      <h2 title="This feature will add your salary on the chosen day">
+        Auto increment
+      </h2>
+
+      <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+        <div class="form-group">
+          <label for="exampleInputPassword1">Actual pay day:</label>
+          <input
+            ngModel
+            type="number"
+            name="value"
+            class="form-control"
+            min="1"
+            max="31"
+            placeholder="Ex: 15"
+            *ngIf="!activateMode"
+            [ngModel]="userData.autoIncrement.date"
+          />
+        </div>
+        <button
+          type="submit"
+          class="btn"
+          [ngClass]="{
+            'btn-success': !activateMode,
+            'btn-danger': activateMode
+          }"
+        >
+          {{ activateMode ? "Disable" : "Activate" }}
+        </button>
+      </form>
+      <div
+        class="alert alert-warning alert-dismissible fade show mt-2"
+        role="alert"
+      >
+        <strong>Auto Increment function!</strong> Once activated this functin
+        will add your monthly income in your history transfer at specified
+        date(Pay day:)
+        <button
+          type="button"
+          class="close"
+          data-dismiss="alert"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

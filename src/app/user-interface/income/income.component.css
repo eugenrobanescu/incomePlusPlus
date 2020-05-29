@@ -1,0 +1,21 @@
+.border-top {
+  border-width: 3px !important;
+}
+.border-right {
+  border-width: 5px !important;
+}
+.row {
+  height: 500px !important;
+}
+.col-6 {
+  padding: 0 5px !important;
+}
+.mt-2 {
+  margin-top: 50px !important;
+}
+.col-5 {
+  margin-top: 150px !important;
+}
+.ml-2 {
+  margin-left: 40px !important;
+}

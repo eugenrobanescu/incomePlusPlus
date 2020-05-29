@@ -1,0 +1,135 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" style="cursor: pointer;"> Income++</a>
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-toggle="collapse"
+    data-target="#navbarNavDropdown"
+    aria-controls="navbarNavDropdown"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav">
+      <li class="nav-item" routerLink="income" routerLinkActive="active">
+        <a class="nav-link" style="cursor: pointer;">Your income </a>
+      </li>
+      <li class="nav-item" routerLink="history" routerLinkActive="active">
+        <a class="nav-link" style="cursor: pointer;">History transfer</a>
+      </li>
+
+      <li class="nav-item dropdown">
+        <a
+          *ngIf="userData"
+          class="nav-link dropdown-toggle"
+          href="#"
+          id="navbarDropdownMenuLink"
+          role="button"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          Your Profile
+        </a>
+        <div
+          class="dropdown-menu"
+          *ngIf="userData"
+          aria-labelledby="navbarDropdownMenuLink"
+        >
+          <a class="dropdown-item active" style="cursor: pointer;">{{
+            userData.name
+          }}</a>
+          <a class="dropdown-item" style="cursor: pointer;"
+            >Monthly income: <strong>{{ userData.monthlyIncome }}</strong></a
+          >
+          <a
+            class="dropdown-item"
+            style="cursor: pointer;"
+            routerLink="update-data"
+            data-toggle="modal"
+            data-target="#exampleModalCenter"
+            >Update your data</a
+          >
+          <a class="dropdown-item" style="cursor: pointer;" (click)="logout()"
+            >Logout</a
+          >
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
+<app-history *ngIf="showComponents"></app-history>
+<app-income *ngIf="showComponents"></app-income>
+<!-- <router-outlet></router-outlet> -->
+<div
+  class="modal fade"
+  id="exampleModalCenter"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="updateUserData" #f="ngForm" (ngSubmit)="onSubmit(f)">
+          <div class="form-group">
+            <label for="exampleInputEmail1">New name</label>
+            <input
+              type="text"
+              ngModel
+              name="name"
+              class="form-control"
+              placeholder="Enter name"
+            />
+            <small id="emailHelp" class="form-text text-muted"
+              >We'll never share your email with anyone else.</small
+            >
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">New monthly income:</label>
+            <input
+              type="number"
+              ngModel
+              name="value"
+              class="form-control"
+              placeholder="Monthly Income"
+              [ngModel]="0"
+            />
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button
+          #cancelButton
+          type="button"
+          class="btn btn-secondary"
+          data-dismiss="modal"
+        >
+          Close
+        </button>
+        <button
+          type="submit"
+          class="btn btn-primary"
+          form="updateUserData"
+          (click)="triggerEvent()"
+        >
+          Save changes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
