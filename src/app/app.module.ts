@@ -16,7 +16,7 @@ import { AngularFireModule } from "@angular/fire";
 import { AngularFirestoreModule } from "@angular/fire/firestore";
 import { AngularFireStorageModule } from "@angular/fire/storage";
 import { AngularFireAuthModule } from "@angular/fire/auth";
-import { UpdateDataComponent } from "./user-interface/update-data/update-data.component";
+
 import { NgxChartsModule } from "@swimlane/ngx-charts";
 import { GridModule } from "@progress/kendo-angular-grid";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
@@ -41,7 +41,6 @@ const firebaseConfig = {
     HistoryComponent,
 
     LoadingSpinnerComponent,
-    UpdateDataComponent,
   ],
   imports: [
     BrowserModule,
