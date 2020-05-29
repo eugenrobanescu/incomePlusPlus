@@ -1,10 +1,10 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 
 import { SortDescriptor, orderBy } from "@progress/kendo-data-query";
 import { GridDataResult } from "@progress/kendo-angular-grid";
 import { formatDate } from "@angular/common";
 
-import { NgForm, FormGroup, FormControl, Validators } from "@angular/forms";
+import { NgForm, FormGroup, FormControl } from "@angular/forms";
 import { DataStorageService } from "src/app/shared/data-storage.service";
 import { AngularFireAuth } from "@angular/fire/auth";
 import { Subscription } from "rxjs";
